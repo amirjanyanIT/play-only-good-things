@@ -5,20 +5,20 @@ import { useEffect } from "react";
 
 function App() {
   useEffect(() => {
-    store.initialize();
-    window.addEventListener("keyup", (e) => {
-      if(e.key === 'e') {
-        store.moveBoard();
-      }
-    });
+    
   }, []);
 
   return (
-    <div className="App">
+    <div className="App" style={
+      {
+        width: store.display[0],
+        height: store.display[1],
+      }
+    }>
       {store.board.map((c, cI) => (
         <div className="line" key={cI}>
           {c.map((i, iI) => (
-            <div key={iI} className="item">
+            <div key={iI} className={`item item--${i}`}>
               {i}
             </div>
           ))}

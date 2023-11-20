@@ -10,7 +10,13 @@ import { makeAutoObservable } from "mobx";
 type ObjectsT = "e" | "x" | "o" | "p";
 type RatesT = { type: ObjectsT; rate: number }[];
 
+type GameStatusT = "hold" | "in-progress" | "game-over";
+type PlayerDirection = "left" | "right";
+
 class Store {
+  gameStatus: GameStatusT = "hold";
+  speed = 1000;
+  display = [800, 600];
   board: ObjectsT[][] = [];
   scale = 10;
   itemsAtLine = 5;
@@ -20,6 +26,10 @@ class Store {
     { type: "x", rate: 0.1 },
     { type: "o", rate: 0.2 },
   ];
+
+  intervalName: number | null = null;
+
+  playerLine: ObjectsT[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -31,8 +41,11 @@ class Store {
       this.board[i] = [];
       for (let j = 0; j < this.scale; j++) {
         this.board[i][j] = "e";
+        this.playerLine.push("e");
       }
     }
+
+    this.playerLine[(this.playerLine.length - 1) / 2] = "p";
   }
 
   private genItem() {
@@ -80,7 +93,7 @@ class Store {
     return true;
   }
 
-  public moveBoard() {
+  private moveBoard() {
     let lastLine = this.board[this.board.length - 1];
 
     for (let i = this.board.length - 1; i >= 0; i--) {
@@ -91,6 +104,59 @@ class Store {
     this.setItemInitialPosition(this.itemsAtLine);
 
     return lastLine;
+  }
+
+  public movePlayer(direction: PlayerDirection) {
+    if(this.gameStatus !== 'in-progress'){ 
+      return false;
+    }
+
+
+    const whiteLine = [...this.playerLine].map(() => "e");
+    const currentDirection = this.playerLine.indexOf("p");
+
+    if (currentDirection === 0 && direction === "left") {
+      return false;
+    }
+
+    if (
+      currentDirection === this.playerLine.length - 1 &&
+      direction === "right"
+    ) {
+      return false;
+    }
+
+    switch (direction) {
+      case "left": {
+        whiteLine[currentDirection - 1] = "p";
+        break;
+      }
+      case "right": {
+        whiteLine[currentDirection + 1] = "p";
+        break;
+      }
+      
+    }
+
+    return true;
+  }
+
+  public start() {
+    this.initialize();
+    this.gameStatus = 'in-progress';
+
+    this.intervalName =  window.setInterval(() => {
+      this.moveBoard();
+    }, this.speed);
+  }
+
+  public end() {
+    this.initialize();
+    this.gameStatus = 'hold';
+
+    if(this.intervalName) {
+      clearInterval(this.intervalName);
+    }
   }
 }
 
