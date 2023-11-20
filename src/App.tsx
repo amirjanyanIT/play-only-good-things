@@ -11,8 +11,8 @@ function App() {
         <Routes>
           <Route path="/" Component={Main} />
           <Route path="/settings" Component={Settings} />
-          <Route path="/play" Component={Scoreboard} />
-          <Route path="/scoreboard" Component={GamePlay} />
+          <Route path="/play" Component={GamePlay} />
+          <Route path="/scoreboard" Component={Scoreboard} />
         </Routes>
       </BrowserRouter>
     </Container>

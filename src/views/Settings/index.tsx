@@ -25,7 +25,7 @@ export const Settings = observer(() => {
 
     if (confirmed) {
       store.applySettings(settings);
-      navigate('/');
+      navigate("/");
     }
   };
 
@@ -91,8 +91,8 @@ export const Settings = observer(() => {
           <span>Items at line:</span>
           <div>
             <input
-              type="number"
               value={settings.itemsAtLine}
+              type="number"
               onChange={({ target }) =>
                 setSettings({
                   ...settings,

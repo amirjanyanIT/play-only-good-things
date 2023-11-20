@@ -16,7 +16,7 @@ export const Main = observer(() => {
         <div>(You can change you'r name in Settings)</div>
       </div>
       <div className="actions">
-        <button>Play</button>
+        <button onClick={() => navigate("/play")}>Play</button>
         <button>ScoreBoard</button>
         <button onClick={() => navigate("/settings")}>Settings</button>
       </div>

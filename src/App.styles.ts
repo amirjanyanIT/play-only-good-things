@@ -5,5 +5,4 @@ export const Container = styled.div<{ resolution: [number, number] }>`
     height: ${({resolution}) => resolution[1]}px;
     margin: 10px auto;
     border: 1px solid var(--secondary);
-    padding: 10px;
 `;

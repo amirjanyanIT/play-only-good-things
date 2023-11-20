@@ -7,7 +7,7 @@ import { makeAutoObservable } from "mobx";
     p = Player
 */
 
-type ObjectsT = "e" | "x" | "o" | "p";
+export type ObjectsT = "e" | "x" | "o" | "p";
 type RatesT = { type: ObjectsT; rate: number }[];
 
 type GameStatusT = "hold" | "in-progress" | "game-over";
@@ -22,9 +22,11 @@ class Store {
   speed: number = 1000;
   display: [number, number] = [800, 600];
   board: ObjectsT[][] = [];
-  scale: number = 10;
-  itemsAtLine: number = 5;
-
+  scale: number = 5;
+  itemsAtLine: number = 3;
+  lifes = 3;
+  score = 0;
+  
   rates: RatesT = [
     { type: "e", rate: 0 },
     { type: "x", rate: 0.1 },
@@ -117,7 +119,7 @@ class Store {
     return true;
   }
 
-  private moveBoard() {
+  public moveBoard() {
     let lastLine = this.board[this.board.length - 1];
 
     for (let i = this.board.length - 1; i >= 0; i--) {
