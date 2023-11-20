@@ -1,30 +1,21 @@
+import { Route, BrowserRouter, Routes } from "react-router-dom";
 import { observer } from "mobx-react";
-
-import { store } from "./store";
-import { useEffect } from "react";
+import { GamePlay, Main, Scoreboard, Settings } from "./views";
+import { Container } from './App.styles';
+import { store } from './store';
 
 function App() {
-  useEffect(() => {
-    
-  }, []);
-
   return (
-    <div className="App" style={
-      {
-        width: store.display[0],
-        height: store.display[1],
-      }
-    }>
-      {store.board.map((c, cI) => (
-        <div className="line" key={cI}>
-          {c.map((i, iI) => (
-            <div key={iI} className={`item item--${i}`}>
-              {i}
-            </div>
-          ))}
-        </div>
-      ))}
-    </div>
+    <Container resolution={store.display}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" Component={Main} />
+          <Route path="/settings" Component={Settings} />
+          <Route path="/play" Component={Scoreboard} />
+          <Route path="/scoreboard" Component={GamePlay} />
+        </Routes>
+      </BrowserRouter>
+    </Container>
   );
 }
 

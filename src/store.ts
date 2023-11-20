@@ -14,12 +14,16 @@ type GameStatusT = "hold" | "in-progress" | "game-over";
 type PlayerDirection = "left" | "right";
 
 class Store {
+  gameTitle = "Only Good Things";
+
+  player: string = "Player";
+
   gameStatus: GameStatusT = "hold";
-  speed = 1000;
-  display = [800, 600];
+  speed: number = 1000;
+  display: [number, number] = [800, 600];
   board: ObjectsT[][] = [];
-  scale = 10;
-  itemsAtLine = 5;
+  scale: number = 10;
+  itemsAtLine: number = 5;
 
   rates: RatesT = [
     { type: "e", rate: 0 },
@@ -36,13 +40,33 @@ class Store {
     this.initialize();
   }
 
+  applySettings(settings: {
+    player: string;
+    display: [number, number];
+    itemsAtLine: number;
+    speed: number;
+  }) {
+    
+    this.player = settings.player;
+    this.display = settings.display;
+    this.itemsAtLine = settings.itemsAtLine;
+    this.speed = settings.speed;
+
+    return true;
+    
+  }
+
   initialize() {
     for (let i = 0; i < this.scale * 3; i++) {
       this.board[i] = [];
+
       for (let j = 0; j < this.scale; j++) {
         this.board[i][j] = "e";
-        this.playerLine.push("e");
       }
+    }
+
+    for (let j = 0; j < this.scale; j++) {
+      this.playerLine.push("e");
     }
 
     this.playerLine[(this.playerLine.length - 1) / 2] = "p";
@@ -107,10 +131,9 @@ class Store {
   }
 
   public movePlayer(direction: PlayerDirection) {
-    if(this.gameStatus !== 'in-progress'){ 
+    if (this.gameStatus !== "in-progress") {
       return false;
     }
-
 
     const whiteLine = [...this.playerLine].map(() => "e");
     const currentDirection = this.playerLine.indexOf("p");
@@ -135,7 +158,6 @@ class Store {
         whiteLine[currentDirection + 1] = "p";
         break;
       }
-      
     }
 
     return true;
@@ -143,18 +165,18 @@ class Store {
 
   public start() {
     this.initialize();
-    this.gameStatus = 'in-progress';
+    this.gameStatus = "in-progress";
 
-    this.intervalName =  window.setInterval(() => {
+    this.intervalName = window.setInterval(() => {
       this.moveBoard();
     }, this.speed);
   }
 
   public end() {
     this.initialize();
-    this.gameStatus = 'hold';
+    this.gameStatus = "hold";
 
-    if(this.intervalName) {
+    if (this.intervalName) {
       clearInterval(this.intervalName);
     }
   }
