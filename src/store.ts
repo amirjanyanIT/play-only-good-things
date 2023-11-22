@@ -20,11 +20,11 @@ class Store {
   scale: number = 5;
   itemsAtLine: number = 3;
   itemsPerLine: {
-    perLine: number,
-    counter: number
-  }  = {
+    perLine: number;
+    counter: number;
+  } = {
     perLine: 5,
-    counter: 1
+    counter: 1,
   };
 
   rates: RatesT = [
@@ -54,14 +54,12 @@ class Store {
     itemsAtLine: number;
     speed: number;
   }) {
-    
     this.player = settings.player;
     this.display = settings.display;
     this.itemsAtLine = settings.itemsAtLine;
     this.speed = settings.speed;
 
     return true;
-    
   }
 
   initialize() {
@@ -106,7 +104,7 @@ class Store {
   }
 
   private setItemInitialPosition(round: number) {
-    if(this.itemsPerLine.perLine !== this.itemsPerLine.counter) {
+    if (this.itemsPerLine.perLine !== this.itemsPerLine.counter) {
       this.itemsPerLine.counter = this.itemsPerLine.counter + 1;
       return true;
     }
@@ -147,7 +145,6 @@ class Store {
   }
 
   public movePlayer(direction: PlayerDirection) {
-
     if (this.gameStatus !== "in-progress") {
       return false;
     }

@@ -1,8 +1,8 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import { observer } from "mobx-react";
 import { GamePlay, Main, Scoreboard, Settings } from "./views";
-import { Container } from './App.styles';
-import { store } from './store';
+import { Container } from "./App.styles";
+import { store } from "./store";
 
 function App() {
   return (

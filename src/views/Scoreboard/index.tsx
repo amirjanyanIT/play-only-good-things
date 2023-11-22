@@ -1,5 +1,3 @@
 export const Scoreboard = () => {
-
-
-    return null;
-}
+  return null;
+};

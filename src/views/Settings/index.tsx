@@ -20,7 +20,7 @@ export const Settings = observer(() => {
 
   const onApply = () => {
     const confirmed = window.confirm(
-      "Are you sure?,do you want apply new settings?"
+      "Are you sure?,do you want apply new settings?",
     );
 
     if (confirmed) {
@@ -31,7 +31,7 @@ export const Settings = observer(() => {
 
   const onCancel = () => {
     const confirmed = window.confirm(
-      "Changed settings will be losed, are you sure?"
+      "Changed settings will be losed, are you sure?",
     );
 
     if (confirmed) {

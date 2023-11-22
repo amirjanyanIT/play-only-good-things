@@ -6,19 +6,20 @@ import { FaAppleWhole } from "react-icons/fa6";
 import { IoMdBasket } from "react-icons/io";
 import { useEffect } from "react";
 
-
 export const GamePlay = observer(() => {
-
   useEffect(() => {
-    window.addEventListener('keyup', (e) => {
-      if(e.key === "ArrowLeft") {
-        store.movePlayer('left')
+    window.addEventListener("keyup", (e) => {
+      switch (e.key) {
+        case "ArrowLeft": {
+          store.movePlayer("left");
+          break;
+        }
+        case "ArrowRight": {
+          store.movePlayer("right");
+          break;
+        }
       }
-      
-      if(e.key === "ArrowRight") {
-        store.movePlayer('right')
-      }
-    })
+    });
   }, []);
 
   const renderLifes = () => {
@@ -32,18 +33,18 @@ export const GamePlay = observer(() => {
   };
 
   const renderItemByType = (type: ObjectsT) => {
-    switch(type) {
-        case "e": {
-            return <></>
-        }
+    switch (type) {
+      case "e": {
+        return <></>;
+      }
 
-        case 'o': {
-            return <FaAppleWhole size={20} />
-        }
+      case "o": {
+        return <FaAppleWhole size={20} />;
+      }
 
-        case 'x': {
-            return <FaBomb size={20} />
-        }
+      case "x": {
+        return <FaBomb size={20} />;
+      }
     }
   };
 
@@ -69,14 +70,17 @@ export const GamePlay = observer(() => {
         ))}
       </div>
       <div className="player">
-        {store.playerLine.map((c,index) => {
-          if(c === "p") {
-            return <div className="item"  key={index}><IoMdBasket size={40} /></div>
+        {store.playerLine.map((c, index) => {
+          if (c === "p") {
+            return (
+              <div className="item" key={index}>
+                <IoMdBasket size={40} />
+              </div>
+            );
           }
-          return <div key={index} className="item"></div>
+          return <div key={index} className="item"></div>;
         })}
       </div>
     </Container>
   );
-  
 });
