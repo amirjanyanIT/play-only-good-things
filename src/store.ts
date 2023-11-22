@@ -15,18 +15,18 @@ type PlayerDirection = "left" | "right";
 
 class Store {
   gameTitle = "Only Good Things";
-
   player: string = "Player";
-
-  gameStatus: GameStatusT = "hold";
-  speed: number = 1000;
   display: [number, number] = [800, 600];
-  board: ObjectsT[][] = [];
   scale: number = 5;
   itemsAtLine: number = 3;
-  lifes = 3;
-  score = 0;
-  
+  itemsPerLine: {
+    perLine: number,
+    counter: number
+  }  = {
+    perLine: 5,
+    counter: 1
+  };
+
   rates: RatesT = [
     { type: "e", rate: 0 },
     { type: "x", rate: 0.1 },
@@ -35,7 +35,13 @@ class Store {
 
   intervalName: number | null = null;
 
+  gameStatus: GameStatusT = "hold";
+  lifes = 3;
+  score = 0;
+  speed: number = 1000;
+  board: ObjectsT[][] = [];
   playerLine: ObjectsT[] = [];
+  boardLastLine: ObjectsT[] = [];
 
   constructor() {
     makeAutoObservable(this);
@@ -100,6 +106,13 @@ class Store {
   }
 
   private setItemInitialPosition(round: number) {
+    if(this.itemsPerLine.perLine !== this.itemsPerLine.counter) {
+      this.itemsPerLine.counter = this.itemsPerLine.counter + 1;
+      return true;
+    }
+
+    this.itemsPerLine.counter = 0;
+
     for (let i = 0; i < round; i++) {
       let emptyPositions: number[] = [];
 
@@ -119,7 +132,7 @@ class Store {
     return true;
   }
 
-  public moveBoard() {
+  private moveBoard() {
     let lastLine = this.board[this.board.length - 1];
 
     for (let i = this.board.length - 1; i >= 0; i--) {
@@ -129,15 +142,17 @@ class Store {
     this.createNewLine();
     this.setItemInitialPosition(this.itemsAtLine);
 
-    return lastLine;
+    this.boardLastLine = lastLine;
+    return true;
   }
 
   public movePlayer(direction: PlayerDirection) {
+
     if (this.gameStatus !== "in-progress") {
       return false;
     }
 
-    const whiteLine = [...this.playerLine].map(() => "e");
+    const whiteLine: ObjectsT[] = [...this.playerLine].map(() => "e");
     const currentDirection = this.playerLine.indexOf("p");
 
     if (currentDirection === 0 && direction === "left") {
@@ -161,6 +176,8 @@ class Store {
         break;
       }
     }
+
+    this.playerLine = whiteLine;
 
     return true;
   }

@@ -3,16 +3,21 @@ import { observer } from "mobx-react";
 import { ObjectsT, store } from "../../store";
 import { FaHeart, FaBomb } from "react-icons/fa";
 import { FaAppleWhole } from "react-icons/fa6";
-
+import { IoMdBasket } from "react-icons/io";
 import { useEffect } from "react";
 
 
 export const GamePlay = observer(() => {
 
   useEffect(() => {
-    
-    window.addEventListener('keyup', () => {
-        store.moveBoard();
+    window.addEventListener('keyup', (e) => {
+      if(e.key === "ArrowLeft") {
+        store.movePlayer('left')
+      }
+      
+      if(e.key === "ArrowRight") {
+        store.movePlayer('right')
+      }
     })
   }, []);
 
@@ -63,7 +68,14 @@ export const GamePlay = observer(() => {
           </div>
         ))}
       </div>
-      <div className="player"></div>
+      <div className="player">
+        {store.playerLine.map((c,index) => {
+          if(c === "p") {
+            return <div className="item"  key={index}><IoMdBasket size={40} /></div>
+          }
+          return <div key={index} className="item"></div>
+        })}
+      </div>
     </Container>
   );
   
