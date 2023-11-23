@@ -45,6 +45,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     .title {
-        font-size: 5rem;
+        margin-top: 50px;
+        font-size: 4rem;
     }
 `;

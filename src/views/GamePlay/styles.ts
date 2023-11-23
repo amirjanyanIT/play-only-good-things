@@ -1,21 +1,48 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
   .action-bar {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-    height: 30px;
-    border-bottom: 1px solid var(--secondary);
+    border-left: 1px solid var(--secondary);
     padding: 10px;
-    .lifes {
+    flex: 1;
+    .info{
+      text-align: center;
+    }
+    .main-info {
       display: flex;
-      gap: 5px;
+      justify-content: space-between;
+      .lifes {
+        display: flex;
+        gap: 5px;
+      }
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
     }
   }
-
-  .board {
-    .line {
+  .gameplay {
+    width: 245px;
+    height: 100%;
+    .board {
+      .line {
+        display: flex;
+        justify-content: space-between;
+        .item {
+          display: flex;
+          align-items: center;
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+    .player {
       display: flex;
       justify-content: space-between;
       gap: 5px;
@@ -26,17 +53,9 @@ export const Container = styled.div`
         justify-content: center;
       }
     }
-  }
-
-  .player {
-    display: flex;
-    justify-content: space-between;
-    gap: 5px;
-    .item {
-      display: flex;
-      align-items: center;
-      width: 100%;
-      justify-content: center;
+    .black-box {
+      height: 60px;
+      background-color: black;
     }
   }
 `;

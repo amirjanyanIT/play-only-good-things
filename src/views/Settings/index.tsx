@@ -7,20 +7,16 @@ import { useNavigate } from "react-router-dom";
 export const Settings = observer(() => {
   const navigate = useNavigate();
   const [settings, setSettings] = useState<{
-    player: string;
-    display: [number, number];
-    itemsAtLine: number;
-    speed: number;
+    player?: string;
+    speed?: number;
   }>({
     player: store.player,
-    display: store.display,
-    itemsAtLine: store.itemsAtLine,
     speed: store.speed,
   });
 
   const onApply = () => {
     const confirmed = window.confirm(
-      "Are you sure?,do you want apply new settings?",
+      "Are you sure?,do you want apply new settings?"
     );
 
     if (confirmed) {
@@ -31,7 +27,7 @@ export const Settings = observer(() => {
 
   const onCancel = () => {
     const confirmed = window.confirm(
-      "Changed settings will be losed, are you sure?",
+      "Changed settings will be losed, are you sure?"
     );
 
     if (confirmed) {
@@ -51,54 +47,7 @@ export const Settings = observer(() => {
               onChange={({ target }) =>
                 setSettings({
                   ...settings,
-                  player: target.value ? target.value : settings.player,
-                })
-              }
-            />
-          </div>
-        </li>
-        <li>
-          <span>display:</span>
-          <div>
-            <input
-              value={settings.display[0]}
-              onChange={({ target }) =>
-                setSettings({
-                  ...settings,
-                  display: [
-                    target.value ? Number(target.value) : store.display[0],
-                    settings.display[1],
-                  ],
-                })
-              }
-            />
-            <span>x</span>
-            <input
-              value={settings.display[1]}
-              onChange={({ target }) =>
-                setSettings({
-                  ...settings,
-                  display: [
-                    settings.display[0],
-                    target.value ? Number(target.value) : store.display[1],
-                  ],
-                })
-              }
-            />
-          </div>
-        </li>
-        <li>
-          <span>Items at line:</span>
-          <div>
-            <input
-              value={settings.itemsAtLine}
-              type="number"
-              onChange={({ target }) =>
-                setSettings({
-                  ...settings,
-                  itemsAtLine: target.value
-                    ? Number(target.value)
-                    : store.itemsAtLine,
+                  player: target.value,
                 })
               }
             />
@@ -108,11 +57,12 @@ export const Settings = observer(() => {
           <span>Start Speed:</span>
           <div>
             <input
+              type="number"
               value={settings.speed}
               onChange={({ target }) =>
                 setSettings({
                   ...settings,
-                  speed: target.value ? Number(target.value) : store.speed,
+                  speed: Number(target.value),
                 })
               }
             />{" "}
